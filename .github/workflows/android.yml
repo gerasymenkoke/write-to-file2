@@ -49,6 +49,7 @@ jobs:
           ORG_GRADLE_PROJECT_mavenCentralPassword: 'xyz'
         run: | 
               chmod +x ./gradlew
+              chmod +x /home/runner/work/write-to-file2/write-to-file2/sample/keystore.jks
               ./gradlew build test check
 
       - name: Upload snapshot archives
