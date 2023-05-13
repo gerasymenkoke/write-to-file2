@@ -1,0 +1,49 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    defaultConfig {
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    buildFeatures {
+        viewBinding = true
+    }
+
+    resourcePrefix 'ss_'
+}
+
+dependencies {
+    api deps.appcompat
+    api deps.activity
+    api deps.core_ktx
+    api deps.fragment
+    api deps.documentfile
+    api deps.coroutines.core
+    api deps.coroutines.android
+    api 'com.afollestad.material-dialogs:files:3.3.0'
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
+
+    testImplementation deps.junit
+    testImplementation deps.mockk
+    testImplementation deps.robolectric
+
+    // TODO: Replace with MockK after feature "mock java.io.File" has been fixed: https://github.com/mockk/mockk/issues/603
+    testImplementation "org.mockito:mockito-core:3.3.3"
+    testImplementation "org.mockito:mockito-inline:3.3.3"
+    testImplementation "org.mockito:mockito-all:1.10.19"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
+    testImplementation "org.powermock:powermock-api-mockito2:2.0.5"
+    testImplementation "org.powermock:powermock-module-junit4:2.0.5"
+}
