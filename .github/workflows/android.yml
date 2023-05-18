@@ -27,22 +27,12 @@ jobs:
           java-version: 11
 
       - name: Copy environment variables
-        env:
-          RELEASE_KEYSTORE_BASE64: ${{ secrets.RELEASE_KEYSTORE_BASE64 }}
-          RELEASE_KEYSTORE_ALIAS: ${{ secrets.RELEASE_KEYSTORE_ALIAS }}
-          RELEASE_KEYSTORE_PASSWORD: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
+       
         run: |
               chmod +x ./.github/scripts/copy_env_variables.sh
               ./.github/scripts/copy_env_variables.sh
               
-      - name: Build with Gradle
-        if: ${{ github.repository_owner == 'anggrayudi' }}
-        env:
-          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.OSS_SONATYPE_NEXUS_USERNAME }}
-          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.OSS_SONATYPE_NEXUS_PASSWORD }}
-        run: | 
-              chmod +x ./gradlew
-              ./gradlew build test check
+   
 
       - name: Build with Gradle (default)
         if: ${{ github.repository_owner != 'anggrayudi' }}
@@ -54,9 +44,4 @@ jobs:
               chmod +x /home/runner/work/write-to-file2/write-to-file2/sample/keystore.jks
               ./gradlew build test check
 
-      - name: Upload snapshot archives
-        if: ${{ github.repository_owner == 'anggrayudi' }}
-        env:
-          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.OSS_SONATYPE_NEXUS_USERNAME }}
-          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.OSS_SONATYPE_NEXUS_PASSWORD }}
-        run: ./.github/scripts/deploy_snapshot.sh
+  
